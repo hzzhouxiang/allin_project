@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<beans
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://www.springframework.org/schema/beans">
+
+	<context:component-scan base-package="com.aowin.controller" />
+
+	<mvc:annotation-driven />
+	<!-- 配置数据库连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/allin_project"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value=""></property>
+		<property name="maxActive" value="40"></property>
+		<property name="maxIdle" value="5"></property>
+		<!-- 最大空闲数，数据库连接的最大空闲时间。超过空闲时间， 数据库连 接将被标记为不可用，然后被释放。设为0表示无限制，这里取值为5，表示即使没有数据库连接时依然可以保持5空闲的 
+			连接，而不被清除，随时处于待命状态 -->
+
+	</bean>
+	<!-- SqlSessionFactory是一个sql会话工厂， 在这个工厂里面取得一个session会话丢给客户端使用。 可以理解为，session是由SqlSessionFactory制造的， 
+		需要session的时候直接去工厂里面拿一个，用完了还回来。 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- Mapper 配置 -->
+	<bean id="mapper" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+		<property name="basePackage" value="com.aowin.dao"></property>
+	</bean>
+	<!-- Service 配置 -->
+	<bean id="userService" class="com.aowin.service.UserService">
+		<property name="userMapper" ref="userMapper"></property>
+	<!-- 	<property name="userRoleMapper" ref="userRoleMapper"></property> -->
+	</bean>
+	
+	<!-- 事务 -->
+	<bean id="transaction" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSource" ref="dataSource"></property>
+	    
+	</bean>
+	<!-- 配置一个切面来使用事务 -->
+	<bean id="transactionInt" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+	    
+	    <property name="transactionManager" ref="transaction"></property>
+	    <property name="transactionAttributes">
+	        
+	        <props>
+	            
+	            <prop key="add*">PROPAGATION_REQUIRED</prop>
+	        </props>
+	    </property>
+	</bean>
+	<!-- 自动代理 -->
+	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+	    <property name="beanNames">
+	        <array>
+	            <value>*Service</value>
+	        </array>
+	    </property>
+	    <property name="interceptorNames" value="transactionInt"></property>
+	    
+	</bean>
+		
+
+
+
+</beans>

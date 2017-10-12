@@ -1,0 +1,40 @@
+package com.aowin.controller;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.aowin.model.User;
+import com.aowin.service.IService;
+import com.aowin.service.UserService;
+
+@Controller
+public class UserController {
+	@Resource
+	private IService iService;
+	
+	
+
+//	
+//	@Resource
+//	private User User ;
+//	
+	@RequestMapping("adduser.do")
+	public String addUser(User user) {
+
+
+		iService.addUserService(user);
+
+		return "redirect:/adduser.jsp";
+	}
+
+	public IService getiService() {
+		return iService;
+	}
+
+	public void setiService(IService iService) {
+		this.iService = iService;
+	}
+
+}

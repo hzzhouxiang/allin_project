@@ -1,0 +1,9 @@
+package com.aowin.dao;
+
+import com.aowin.model.User;
+
+public interface UserMapper {
+
+	public int addUser(User user);
+
+}

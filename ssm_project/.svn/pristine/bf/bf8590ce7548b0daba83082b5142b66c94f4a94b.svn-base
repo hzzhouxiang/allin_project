@@ -1,0 +1,52 @@
+package com.aowin.service;
+
+import javax.annotation.Resource;
+
+import com.aowin.dao.UserMapper;
+import com.aowin.dao.UserRoleMapper;
+import com.aowin.model.User;
+
+public class UserService implements IService {
+
+	@Resource
+	private UserMapper userMapper;
+	@Resource
+	private UserRoleMapper UserRoleMapper;
+
+	@Override
+	public int addUserService(User user) {
+
+		int userNum = userMapper.addUser(user);
+
+		String userId = user.getUserId();
+
+		System.out.println("size " + user.getRoleList().size());
+
+		for (int i = 0; i < user.getRoleList().size(); i++) {
+
+			user.getRoleList().get(i).setRoleId(Integer.valueOf(userId));
+		}
+	 
+
+		int roleNum = UserRoleMapper.addUserRole(user.getRoleList());
+
+		return userNum + roleNum;
+	}
+
+	public UserMapper getUserMapper() {
+		return userMapper;
+	}
+
+	public void setUserMapper(UserMapper userMapper) {
+		this.userMapper = userMapper;
+	}
+
+	public UserRoleMapper getUserRoleMapper() {
+		return UserRoleMapper;
+	}
+
+	public void setUserRoleMapper(UserRoleMapper userRoleMapper) {
+		UserRoleMapper = userRoleMapper;
+	}
+
+}

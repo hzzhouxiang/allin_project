@@ -1,0 +1,10 @@
+package com.aowin.service;
+
+
+import com.aowin.model.User;
+
+public interface IService {
+	
+	public int addUserService(User user);
+
+}

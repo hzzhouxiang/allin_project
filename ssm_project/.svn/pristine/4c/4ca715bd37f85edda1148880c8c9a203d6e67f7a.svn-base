@@ -1,0 +1,11 @@
+package com.aowin.dao;
+
+import java.util.List;
+
+import com.aowin.model.UserRole;
+
+public interface UserRoleMapper {
+
+	public int addUserRole(List<UserRole> roleList);
+
+}
