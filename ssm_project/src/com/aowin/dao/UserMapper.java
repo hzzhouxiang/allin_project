@@ -13,7 +13,15 @@ public interface UserMapper {
 	public boolean userLogin(String userphone,String password);
 	//查询用户信息
 	public User userMsg(String userphone); 
-	//修改用户信息
-	public User modifyuserMsg(String userphone);
+	//修改用户信息(不能修改手机号码)
+	public boolean modifyuserMsg(User user);
+	//修改用户手机号码
+	public boolean modifyuserphone(int userid);
+	//根据手机号码 查找内置id
+	public int selectuserId(String userphone);
+	//用户报名参赛
+	public void enterForGame(String userphone);
+	//用户参加战队
+	public void userJoinTeam(User user);
 	
 }

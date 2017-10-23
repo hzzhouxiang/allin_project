@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="com.aowin.dao.TeamMapper">
-
+	<!-- 添加战队信息 -->
+	<insert id="addTeam" parameterType="com.aowin.model.Team">
+		insert into allin_team_table1
+		(leadername,teamname,leaderphone)
+		values (#{leadername},#{teamname},#{leaderphone})
+	</insert>
 	
-
+	<!-- count为1则返回true，0返回false  查看该手机是否已注册过战队-->
+	<select id="haveleaderPhone" parameterType="string" resultType="boolean">
+        select count(leaderphone) from allin_team_table1 where leaderphone = #{leaderphone}
+    </select> 
+    
+    <!-- 根据队长电话号码查询战队信息，返回Team类 -->
+    <select id="teamMsg" parameterType="string" resultType="com.aowin.model.Team">
+    	select * from allin_team_table1 where leaderphone=#{leaderphone}
+    </select>
+    
+    <!-- 修改（更新）战队信息  不能更改队长手机号 -->
+    <update id="modifyteamMsg" parameterType="com.aowin.model.Team">
+    	UPDATE allin_team_table1 SET leadername=#{leadername},teamname=#{teamname},coachname=#{coachname},teammember1_name=#{teammember1_name},teammember1_phone=#{teammember1_phone},teammember1_gameid=#{teammember1_gameid},teammember2_name=#{teammember2_name},teammember2_phone=#{teammember2_phone},teammember2_gameid=#{teammember2_gameid},teammember3_name=#{teammember3_name},teammember3_phone=#{teammember3_phone},teammember3_gameid=#{teammember3_gameid},teammember4_name=#{teammember4_name},teammember4_phone=#{teammember4_phone},teammember4_gameid=#{teammember4_gameid} WHERE leaderphone=#{leaderphone}
+    </update>
+	
+	<!--  删除战队信息-->
+	<delete id="deleteteamMsg" parameterType="string">
+        delete from allin_team_table1 where leaderphone=#{leaderphone}
+    </delete>
+	
 </mapper>

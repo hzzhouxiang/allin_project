@@ -11,11 +11,24 @@ public class User {
 	private String usergameid;
 	private String useridcard;
 	private String userrole;
+	//是否报名参赛 0表示未报名 1表示报名
 	private int situation;
 	private String teamname;
 	private List<Team> roleList;
 	
-
+	public User(){
+		super();
+	}
+	public User(String userphone){
+		super();
+		this.userphone= userphone;
+	}
+	public User(String userphone,String password){
+		super();
+		this.userphone= userphone;
+		this.password=password;
+	}
+	
 	public List<Team> getRoleList() {
 		return roleList;
 	}

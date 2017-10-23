@@ -23,8 +23,28 @@
     	select * from allin_user where userphone=#{userphone}
     </select>
     
-    <!-- 修改（更新）用户信息 -->
-    <update id="modifyuserMsg" parameterType="string">
+    <!-- 修改（更新）用户信息  不能修改手机号-->
+    <update id="modifyuserMsg" parameterType="com.aowin.model.User">
     	UPDATE allin_user SET username=#{username},gender=#{gender},usergameid=#{usergameid},useridcard=#{useridcard},userrole=#{userrole} WHERE userphone=#{userphone}
+    </update>
+    
+    <!-- 修改用户手机号码 -->
+     <update id="modifyuserPhone" parameterType="java.lang.Integer">
+    	UPDATE allin_user SET userphone=#{userphone} WHERE userid=#{userid}
+    </update>
+    
+    <!-- 根据手机号查找内置的用户id -->
+    <select id="selectuserId"  parameterType="String" resultType="java.lang.Integer">
+    	select userid from allin_user WHERE userphone=#{userphone}
+    </select>
+    
+    <!-- 用户报名参加比赛 -->
+    <update id="enterForGame" parameterType="String">
+    	UPDATE allin_user SET situation=1 WHERE userphone=#{userphone}
+    </update>
+    
+    <!-- 用户参加战队 -->
+     <update id="userJoinTeam" parameterType="com.aowin.model.User">
+    	UPDATE allin_user SET teamname=#{teamname} WHERE userphone=#{userphone}
     </update>
 </mapper>

@@ -13,6 +13,14 @@ public class UserService implements IService {
 //	@Resource
 //	private UserRoleMapper UserRoleMapper;
 	
+	public UserMapper getUserMapper() {
+		return userMapper;
+	}
+
+	public void setUserMapper(UserMapper userMapper) {
+		this.userMapper = userMapper;
+	}
+	
 	//添加用户方法
 	@Override
 	public int addUserService(User user) {
@@ -32,13 +40,7 @@ public class UserService implements IService {
 		return userNum;
 	}
 
-	public UserMapper getUserMapper() {
-		return userMapper;
-	}
 
-	public void setUserMapper(UserMapper userMapper) {
-		this.userMapper = userMapper;
-	}
 
 	//添加查询重复电话号码方法,有则返回true
 	@Override
@@ -46,19 +48,56 @@ public class UserService implements IService {
 		boolean havephone = userMapper.havePhone(userphone);
 		return havephone;
 	}
-
+	
+	//用户登陆
 	@Override
 	public boolean userLoginService(String userphone, String password) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean userlogin = userMapper.userLogin(userphone, password);
+		return userlogin;
 	}
 
+	//查询用户信息
 	@Override
 	public User userMsgService(String userphone) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = userMapper.userMsg(userphone);
+		return user;
+	}
+
+	//修改用户信息（不能修改电话号码）
+	@Override
+	public boolean modifyuserMsgService(User user) {
+		boolean modifyuserMsg = userMapper.modifyuserMsg(user);
+		
+		return modifyuserMsg;
+	}
+
+	//修改用户手机号码
+	@Override
+	public boolean modifyuserphoneService(int userid) {
+		boolean modifyuserphone = userMapper.modifyuserphone(userid);
+		return modifyuserphone;
+	}
+
+	//根据手机号码 查找内置id 用于用户修改手机号
+	@Override
+	public int selectuseridService(String userphone) {
+		int userid = userMapper.selectuserId(userphone);
+		return userid;
+	}
+
+	//用户报名参赛
+	@Override
+	public void enterForGameService(String userphone) {
+		userMapper.enterForGame(userphone);
+	}
+	
+	//用户参加战队
+	@Override
+	public void userJoinTeamService(User user) {
+		userMapper.userJoinTeam(user);
 	}
 
 
+	
 
 }

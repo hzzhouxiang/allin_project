@@ -9,7 +9,7 @@
 <c:set var="contextPath" value="<%=contextPath%>"/>
 
 <script src="js/jquery-1.11.1.js"></script>
-
+<script src="js/bootstrap.js"></script>
 <script src="${contextPath }/js/zkl.js" type="text/javascript"></script>
 <script type="text/javascript">
 

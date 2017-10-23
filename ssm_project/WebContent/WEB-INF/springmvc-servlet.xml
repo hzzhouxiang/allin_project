@@ -38,12 +38,36 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
 		<property name="basePackage" value="com.aowin.dao"></property>
 	</bean>
-	<!-- Service 配置 -->
+	<!-- Service 配置 
+	用户
+	战队
+	队长
+	战队成员
+	-->
 	<bean id="userService" class="com.aowin.service.UserService">
 		<property name="userMapper" ref="userMapper"></property>
-	<!-- 	<property name="userRoleMapper" ref="userRoleMapper"></property> -->
 	</bean>
 	
+	<bean id="teamService" class="com.aowin.service.TeamService">
+		<property name="teamMapper" ref="teamMapper"></property> 
+	</bean>
+	
+	<bean id="leaderService" class="com.aowin.service.LeaderService">
+		<property name="leaderMapper" ref="leaderMapper"></property>
+	</bean>	
+	
+	<bean id="memberService" class="com.aowin.service.MemberService">
+		<property name="memberMapper" ref="memberMapper"></property>
+	</bean>	
+	  <!--
+        mybatis自动扫描加载Sql映射文件/接口 : MapperScannerConfigurer sqlSessionFactory         basePackage:指定sql映射文件/接口所在的包（自动扫描）
+    
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.dao"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>-->
+    
+    
 	<!-- 事务 -->
 	<bean id="transaction" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 	    <property name="dataSource" ref="dataSource"></property>

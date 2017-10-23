@@ -11,6 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <meta charset="utf-8">
@@ -25,10 +26,11 @@
 <script type="text/javascript">
 function doajax(){
 	App.Ajax.request({
-	    url: 'checkadduser.do',
+	    url: 'adduser.do',
 	    data: {
 	        'userphone': $('input[name=userphone]').val(),
-	        'password':$('input[name=password]').val()
+	        'password':$('input[name=password]').val(),
+	        'phonevcode':$('input[name=phonevcode]').val()
 	    },
 	    isAutoTip: false,
 	    success: function (resp) {
@@ -36,13 +38,51 @@ function doajax(){
 	            alert("操作失败:" + resp.msg);
 	        } else {
 	            alert('添加成功');
-	            /*然后做点什么*/
-	            
+	            /*然后跳转页面*/
+	            window.location.href = 'index.do';
 	        }
 	    }
 	});
 }
 
+function doajax1(){
+	App.Ajax.request({
+	    url: 'verificationcode.do',
+	    data: {
+	    	'vcode':$('input[name=vcode]').val(),
+	    	'userphone':$('input[name=userphone]').val()
+	    },
+	    isAutoTip: false,
+	    success: function (resp) {
+	        if (resp.returnCode != 200) {
+	            alert("操作失败:" + resp.msg);
+	            loadimage();
+	        } else {
+	            alert('验证码与手机号格式正确,启动短信接口');
+				doajax2()	            
+	        }
+	    }
+	});
+}
+
+
+function doajax2(){
+	App.Ajax.request({
+	    url: 'usersendmsg.do',
+	    data: {
+	    	'userphone':$('input[name=userphone]').val()
+	    },
+	    isAutoTip: false,
+	    success: function (resp) {
+	        if (resp.returnCode != 200) {
+	            alert("操作失败:" + resp.msg);
+	            loadimage();
+	        } else {
+	            alert('短信已发送，请注意查收');
+	        }
+	    }
+	});
+}
 
 </script>
 </head>
@@ -52,15 +92,45 @@ function doajax(){
 		用户信息 :
 
 		<!--  placeholder 规定可描述输入字段预期值的简短的提示信息。 -->
-		<br> <input maxlength="15"  placeholder="用户名" name="username">
+		<br>
+		<input maxlength="11"  placeholder="联系电话" name="userphone" ><br> <br>
 		<input type="password"  maxlength="20" placeholder="密码" name="password"><br> 
-		<br> <input maxlength="1" placeholder="性别" name="gender">
-		<input maxlength="11"  placeholder="联系电话" name="userphone" ><br> 
-		<br> <input  maxlength="20" placeholder="游戏id" name="usergameid">
-		<input  maxlength="18" placeholder="身份证" name="useridcard"><br> 
-		<br> <input  maxlength="15" placeholder="角色所在大区" name="userrole">
-		<br> 
-	
+		<br> <input  maxlength="6" placeholder="手机验证码" name="phonevcode">
+		<br> <br>
+		<!-- 按钮触发模态框 -->
+		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+		获取手机验证码
+		</button>
+
+
+		<!-- 模态框（Modal） -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					请输入验证码
+				</h4>
+				</div>
+				<div class="modal-body">
+ 					 <input  maxlength="4" placeholder="输入验证码" name="vcode" >
+ 					 <img src="${contextPath}/image.jsp" alt="点击刷新" id="randImage">
+					<a id="kanbuq" href="javascript:loadimage();" style="font-size:12px;color:#888;">看不清?换一张.</a> 
+				</div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消
+				</button>
+				<button type="button" class="btn btn-primary" onclick="doajax1();">
+					确定
+				</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	 </div><!-- /.modal fade -->
+		<br>
 		<br> <input type="button" value="提交"  onclick="doajax();">
 	</form>
 	</div>
