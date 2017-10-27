@@ -11,6 +11,8 @@ public interface UserMapper {
 	public boolean havePhone(String userphone);
 	//用户登陆@param(“userName”)Stringname,@param(“userArea”)String area
 	public boolean userLogin(String userphone,String password);
+	//查询身份证是否重复
+	public boolean havaIdcard(String useridcard);
 	//查询用户信息
 	public User userMsg(String userphone); 
 	//修改用户信息(不能修改手机号码)

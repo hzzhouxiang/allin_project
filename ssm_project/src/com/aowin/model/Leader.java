@@ -11,6 +11,10 @@ public class Leader {
 	private String leaderrole;
 	//游戏id
 	private String leadergameid;
+	
+	public Leader(){
+		super();
+	}
 	@Override
 	public String toString() {
 		return "Leader队长信息： [leaderphone=" + leaderphone + ", leaderidcard=" + leaderidcard + ", leadername=" + leadername

@@ -68,6 +68,24 @@ public class LeaderService implements ILeaderService {
 		return Leaderid;
 	}
 
+	//删除队长
+	public boolean delLeaderService(String leaderphone) {
+		boolean delLeader = leaderMapper.delLeader(leaderphone);
+		return delLeader;
+	}
+
+	/*根据队伍id查询队长信息*/
+	public Leader TidSLeaderService(int teamid) {
+		Leader leader = leaderMapper.TidSLeader(teamid);
+		return leader;
+	}
+
+	/*修改队长信息中的 战队id与战队名*/
+	public boolean modifyLeaderTidService(int teamid, String teamname, String leaderphone) {
+		boolean mLeaderTid = leaderMapper.modifyLeaderTid(teamid, teamname, leaderphone);
+		return mLeaderTid;
+	}
+
 
 	
 

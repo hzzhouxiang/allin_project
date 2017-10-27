@@ -1,5 +1,7 @@
 package com.aowin.model;
 
+import java.util.List;
+
 public class Member {
 	private String memberphone;
 	private String membername;
@@ -10,6 +12,7 @@ public class Member {
 	private String membergender;
 	private String memberidcard;
 	private String memberrole;
+
 	
 	public Member(){
 		super();
@@ -18,12 +21,26 @@ public class Member {
 		super();
 		this.memberphone = memberphone;
 	}
+	public Member(String memberphone,String membername,String membergameid,String memberduty,int teamid,String teamname,String membergender,String memberidcard,String memberrole){
+		super();
+		this.memberphone = memberphone;
+		this.membername = membername;
+		this.membergameid = membergameid;
+		this.memberduty = memberduty;
+		this.teamid = teamid;
+		this.teamname = teamname;
+		this.membergender = membergender;
+		this.memberidcard = memberidcard;
+		this.memberrole = memberrole;
+	}
 	@Override
 	public String toString() {
-		return "战队成员信息： [memberphone=" + memberphone + ", membername=" + membername + ", membergameid=" + membergameid
+		return "Member [memberphone=" + memberphone + ", membername=" + membername + ", membergameid=" + membergameid
 				+ ", memberduty=" + memberduty + ", teamid=" + teamid + ", teamname=" + teamname + ", membergender="
-				+ membergender + ", memberidcard=" + memberidcard + ", memberrole=" + memberrole + "]";
+				+ membergender + ", memberidcard=" + memberidcard + ", memberrole=" + memberrole 
+				 + "]";
 	}
+	
 	public String getMemberphone() {
 		return memberphone;
 	}
@@ -78,5 +95,7 @@ public class Member {
 	public void setMemberrole(String memberrole) {
 		this.memberrole = memberrole;
 	}
+
+
 	
 }

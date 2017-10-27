@@ -4,8 +4,8 @@
 	<!-- 添加战队成员 -->
 	<insert id="addMember" parameterType="com.aowin.model.Member">
 		insert into allin_team_member1
-		(memberphone,membername,membergameid,membergender,memberidcard,memberrole)
-		values (#memberphone},#{membername},#{membergameid},#{membergender},#{memberidcard},#{memberrole})
+		(memberphone,membername,membergameid,membergender,memberidcard,memberrole,teamid,teamname,memberduty)
+		values (#{memberphone},#{membername},#{membergameid},#{membergender},#{memberidcard},#{memberrole},#{teamid},#{teamname},#{memberduty})
 	</insert>
 	
 	<!--查询战队成员电话号码是否重复
@@ -20,24 +20,40 @@
     </select>
     
     <!-- 修改战队成员信息 -->
-    <update id=" modifyMMsg" parameterType="com.aowin.model.Member">
-    	UPDATE allin_team_member1 SET membername=#{membername},teamname=#{teamname},coachname=#{coachname},teammember1_name=#{teammember1_name},teammember1_phone=#{teammember1_phone},teammember1_gameid=#{teammember1_gameid},teammember2_name=#{teammember2_name},teammember2_phone=#{teammember2_phone},teammember2_gameid=#{teammember2_gameid},teammember3_name=#{teammember3_name},teammember3_phone=#{teammember3_phone},teammember3_gameid=#{teammember3_gameid},teammember4_name=#{teammember4_name},teammember4_phone=#{teammember4_phone},teammember4_gameid=#{teammember4_gameid} WHERE memberphone=#{memberphone}
+    <update id="modifyMMsg" parameterType="com.aowin.model.Member">
+    	UPDATE allin_team_member1 SET memberphone=#{memberphone},membername=#{membername},membergameid=#{membergameid},memberidcard=#{memberidcard},membergender=#{membergender},memberrole=#{memberrole} WHERE memberduty=#{memberduty} AND teamid=#{teamid}
     </update>
 	
-	<!--  删除战队信息-->
+	<!-- 批量修改战队成员信息 -->
+	    <update id="modifyMsMsg" parameterType="java.util.List">
+	    	<foreach collection="list" item="listM" index="index" open="" close="" separator=",">
+   			UPDATE allin_team_member1 
+   				<set> 
+   					memberphone=${listM.memberphone},membername=${listM.membername},membergameid=${listM.membergameid},memberidcard=${listM.memberidcard},membergender=${listM.gender},memberrole=${listM.memberrole}
+   				</set>
+			 WHERE teamid=${listM.teamid} AND memberduty=${listM.memberduty}  				
+   			</foreach>
+   		 </update>
+	
+	<!--  删除战队成员信息-->
 	<delete id="delMMsg" parameterType="string">
         delete from allin_team_member1 where memberphone=#{memberphone}
     </delete>
 	
 	<!-- 根据战队成员手机号查找所在战队id -->
-	<select id="mphoneST" parameterType="string" resultType="java.lang.Integer">
+	<select id="mphoneSTid" parameterType="string" resultType="java.lang.Integer">
 		select teamid from allin_team_member1 where memberphone=#{memberphone}
 	</select>
 	
     
 	<!-- 根据战队内置id 查找出同个队伍的所有成员list -->
 	<select id="queryAllMembers"  parameterType="java.lang.Integer" resultType="com.aowin.model.Member">
-		select * from allin_team_member1 where teamid=#{teamid}
+		select * from allin_team_member1 where teamid=#{teamid} order by memberid
+	</select>
+	
+	<!-- 该用户是否是战队成员 -->
+	<select id="userIsM"  parameterType="string" resultType="boolean">
+		select count(*) from allin_team_member1 where memberphone=#{userphone}
 	</select>
 	
 </mapper>

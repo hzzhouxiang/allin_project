@@ -43,10 +43,17 @@ public class MemberService implements IMemberService{
 		boolean modifyMMsg = memberMapper.modifyMMsg(member);
 		return modifyMMsg;
 	}
-
+	
+	//批量修改战队成员信息
+	@Override
+	public boolean modifyMsMsgService(List<Member> listM) {
+		boolean modifyMsMsg = memberMapper.modifyMsMsg(listM);
+		return modifyMsMsg;
+	}
+	
 	//根据战队成员手机号查找所在战队id
-	public int mphoneSTService(String memberphone) {
-		int teamid = memberMapper.mphoneST(memberphone);
+	public int mphoneSTidService(String memberphone) {
+		int teamid = memberMapper.mphoneSTid(memberphone);
 		return teamid;
 	}
 
@@ -61,6 +68,14 @@ public class MemberService implements IMemberService{
 		List<Member> listM = memberMapper.queryAllMembers(teamid);
 		return listM;
 	}
+
+	/*该用户是否是战队成员*/
+	public boolean userIsMService(String userphone) {
+		boolean userIsM = memberMapper.userIsM(userphone);
+		return userIsM;
+	}
+	
+
 
 	
 	

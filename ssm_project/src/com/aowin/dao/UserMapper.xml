@@ -13,6 +13,11 @@
         select count(userid) from allin_user where userphone = #{userphone}
     </select> 
     
+    <!-- 查询身份证是否重复 -->
+    <select id="havaIdcard" parameterType="string" resultType="boolean">
+    	  select count(userid) from allin_user where  useridcard = #{ useridcard}
+    </select>
+    
     <!-- 用户登录  传入参数:0电话号码，1密码 -->
     <select id="userLogin"  resultType="boolean">
     	select count(*) from allin_user where userphone = #{0} and password=#{1}

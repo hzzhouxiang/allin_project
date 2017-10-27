@@ -19,38 +19,43 @@
 <style type="text/css">
 .ui-sortable .panel-header{ cursor:move}
 </style>
-<title>测试页面 添加用户</title>
+<title>测试页面 添加队长</title>
 <meta name="keywords" content="关键词,5个左右,单个8汉字以内">
 <meta name="description" content="网站描述，字数尽量空制在80个汉字，160个字符以内！">
 
 <script type="text/javascript">
+
 function doajax(){
 	App.Ajax.request({
-	    url: 'adduser.do',
+	    url: 'addleader.do',
 	    data: {
-	        'userphone': $('input[name=userphone]').val(),
-	        'password':$('input[name=password]').val(),
-	        'phonevcode':$('input[name=phonevcode]').val()
+	        'leadername': $('input[name=leadername]').val(),
+	        'leaderphone':$('input[name=leaderphone]').val(),
+	        'leadergender':$('input[name=leadergender]').val(),
+	        'leaderrole':$('input[name=leaderrole]').val(),
+	        'leadergameid':$('input[name=leadergameid]').val(),
+	        'leaderidcard':$('input[name=leaderidcard]').val(),
+	        'leadervcode':$('input[name=leadervcode]').val()
 	    },
 	    isAutoTip: false,
 	    success: function (resp) {
 	        if (resp.returnCode != 200) {
 	            alert("操作失败:" + resp.msg);
 	        } else {
-	            alert('添加成功');
-	            /*然后跳转页面*/
+	            alert('成功成为队长,跳转到主页');
 	            window.location.href = 'index.do';
 	        }
 	    }
 	});
 }
 
+
 function doajax1(){
 	App.Ajax.request({
-	    url: 'verificationcode.do',
+	    url: 'leadervcode.do',
 	    data: {
 	    	'vcode':$('input[name=vcode]').val(),
-	    	'userphone':$('input[name=userphone]').val()
+	    	'leaderphone':$('input[name=leaderphone]').val()
 	    },
 	    isAutoTip: false,
 	    success: function (resp) {
@@ -59,7 +64,7 @@ function doajax1(){
 	            loadimage();
 	        } else {
 	            alert('验证码与手机号格式正确,启动短信接口');
-				doajax2()	            
+				doajax2()
 	        }
 	    }
 	});
@@ -68,9 +73,9 @@ function doajax1(){
 
 function doajax2(){
 	App.Ajax.request({
-	    url: 'usersendmsg.do',
+	    url: 'leadersendmsg.do',
 	    data: {
-	    	'userphone':$('input[name=userphone]').val()
+	    	'leaderphone':$('input[name=leaderphone]').val()
 	    },
 	    isAutoTip: false,
 	    success: function (resp) {
@@ -79,29 +84,36 @@ function doajax2(){
 	            loadimage();
 	        } else {
 	            alert('短信已发送，请注意查收');
+	            $('#myModal').modal('hide') 
 	        }
 	    }
 	});
 }
+
+
+
 
 </script>
 </head>
 <body>
 	<div >
 	<form action="javascript:;" method="post">
-		用户信息 :
+		队长信息 :
 
 		<!--  placeholder 规定可描述输入字段预期值的简短的提示信息。 -->
 		<br>
-		<input maxlength="11"  placeholder="联系电话" name="userphone" ><br> <br>
-		<input type="password"  maxlength="20" placeholder="密码" name="password"><br> 
-		<br> <input  maxlength="6" placeholder="手机验证码" name="phonevcode">
+		<input placeholder="姓名" name="leadername"><br> <br>
+		<input maxlength="11"  placeholder="手机号" name="leaderphone" ><br> <br>
+		<input  placeholder="身份证" name="leaderidcard"><br> <br>
+		<input  placeholder="性别" name="leadergender"><br> <br>
+		<input  placeholder="服务器" name="leaderrole"><br> <br>
+		<input  placeholder="游戏id" name="leadergameid"><br> 
+		<br> <input  maxlength="6" placeholder="手机验证码" name="leadervcode">
 		<br> <br>
 		<!-- 按钮触发模态框 -->
 		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick='loadimage()'>
 		获取手机验证码
 		</button>
-
 
 		<!-- 模态框（Modal） -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

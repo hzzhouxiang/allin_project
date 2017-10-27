@@ -42,4 +42,9 @@
 			}
 		});
 	})(jQuery);
+	
+	<!--随机生成随机验证码-->
+	function loadimage() {
+		$("#randImage").attr('src',"${contextPath}"+"/image.jsp?jsessionid=" + Math.random());
+	}
 </script>

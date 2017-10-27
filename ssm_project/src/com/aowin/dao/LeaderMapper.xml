@@ -16,7 +16,7 @@
     
     <!-- 根据队长电话号码查询队长信息，返回Leader类 -->
     <select id="LeaderMsg" parameterType="string" resultType="com.aowin.model.Leader">
-    	select * from allin_team_leader1 where Leaderphone=#{leaderphone}
+    	select * from allin_team_leader1 where leaderphone=#{leaderphone}
     </select>
     
     <!-- 修改（更新）队长信息  不能修改手机号-->
@@ -30,7 +30,22 @@
     </update>
     
     <!-- 根据队长手机号查找内置的队长id -->
-    <select id="selectleaderId"  parameterType="String" resultType="java.lang.Integer">
+    <select id="selectleaderId"  parameterType="string" resultType="java.lang.Integer">
     	select leaderid from allin_team_leader1 WHERE leaderphone=#{leaderphone}
     </select>
+    
+    <!--  删除队长信息-->
+	<delete id="delLeader" parameterType="string">
+        delete from allin_team_leader1 where leaderphone=#{leaderphone}
+    </delete>
+    
+    <!-- 根据队伍id查询队长信息 -->
+    <select id="TidSLeader" parameterType="java.lang.Integer" resultType="com.aowin.model.Leader">
+    	select * from allin_team_leader1 where teamid=#{teamid}
+    </select>
+    
+    <!-- 修改队长的队伍id与队伍名 -->
+    <update id="modifyLeaderTid"  >
+    	UPDATE allin_team_leader1 SET teamid=#{0},teamname=#{1} WHERE leaderphone=#{2}
+    </update>
 </mapper>

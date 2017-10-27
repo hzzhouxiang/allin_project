@@ -49,6 +49,12 @@ public class UserService implements IService {
 		return havephone;
 	}
 	
+	//查询身份证是否重复 
+	public boolean havaIdcardService(String useridcard) {
+		boolean haveidcard = userMapper.havaIdcard(useridcard);
+		return haveidcard;
+	}
+
 	//用户登陆
 	@Override
 	public boolean userLoginService(String userphone, String password) {
@@ -96,6 +102,7 @@ public class UserService implements IService {
 	public void userJoinTeamService(User user) {
 		userMapper.userJoinTeam(user);
 	}
+
 
 
 	

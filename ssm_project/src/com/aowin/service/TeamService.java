@@ -46,6 +46,17 @@ public class TeamService implements ITeamService{
 			Team team = teamMapper.idSteamMsg(teamid);
 			return team;
 		}
+		//查询队伍名是否重复
+		public boolean haveTnameService(String teamname) {
+			boolean havetname = teamMapper.haveTname(teamname);
+			return havetname;
+		}
+		/*根据战队名称查找战队id*/
+		@Override
+		public int tnameStidService(String teamname) {
+			int teamid = teamMapper.tnameStid(teamname);
+			return teamid;
+		}
 	
 
 		

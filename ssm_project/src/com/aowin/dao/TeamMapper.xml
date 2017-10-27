@@ -13,11 +13,25 @@
         select count(leaderphone) from allin_team_table1 where leaderphone = #{leaderphone}
     </select> 
     
+    <!--查询队伍名是否重复 -->
+    <select id="haveTname" parameterType="string" resultType="boolean">
+    	select count(teamname) from allin_team_table1 where teamname = #{teamname}
+    </select>
+    
     <!-- 根据队长电话号码查询战队信息，返回Team类 -->
     <select id="teamMsg" parameterType="string" resultType="com.aowin.model.Team">
     	select * from allin_team_table1 where leaderphone=#{leaderphone}
     </select>
     
+    <!-- 根据战队名称查找战队id -->
+	<select id="tnameStid" parameterType="string" resultType="java.lang.Integer">
+		select teamid from allin_team_table1 where teamname = #{teamname}
+    </select>
+    
+    <!-- 根据战队id查找战队信息 -->
+    <select id="idSteamMsg"  parameterType="java.lang.Integer" resultType="com.aowin.model.Team">
+    	select * from allin_team_table1 where teamid = #{teamid}
+    </select>
     <!-- 修改（更新）战队信息  不能更改队长手机号 -->
     <update id="modifyteamMsg" parameterType="com.aowin.model.Team">
     	UPDATE allin_team_table1 SET leadername=#{leadername},teamname=#{teamname},coachname=#{coachname},teammember1_name=#{teammember1_name},teammember1_phone=#{teammember1_phone},teammember1_gameid=#{teammember1_gameid},teammember2_name=#{teammember2_name},teammember2_phone=#{teammember2_phone},teammember2_gameid=#{teammember2_gameid},teammember3_name=#{teammember3_name},teammember3_phone=#{teammember3_phone},teammember3_gameid=#{teammember3_gameid},teammember4_name=#{teammember4_name},teammember4_phone=#{teammember4_phone},teammember4_gameid=#{teammember4_gameid} WHERE leaderphone=#{leaderphone}

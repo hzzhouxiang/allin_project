@@ -19,7 +19,7 @@
 <style type="text/css">
 .ui-sortable .panel-header{ cursor:move}
 </style>
-<title>测试页面 添加用户</title>
+<title>测试页面 查看用户信息</title>
 <meta name="keywords" content="关键词,5个左右,单个8汉字以内">
 <meta name="description" content="网站描述，字数尽量空制在80个汉字，160个字符以内！">
 
@@ -52,24 +52,30 @@ function doajax(){
 </script>
 </head>
 <body>
-	<div >
-	<form action="javascript:;" method="post" id="user-form">
-		用户信息 :
-
-		<!--  placeholder 规定可描述输入字段预期值的简短的提示信息。 -->
-		<br> <input maxlength="15"  placeholder="用户名" name="username">
-		<input  maxlength="20" placeholder="密码" name="password" value= <c:out value="${sessionScope.user.password}"></c:out>> <br> 
-		<br> <input maxlength="1" placeholder="性别" name="gender">
-		<input maxlength="11"  placeholder="联系电话" name="userphone" disabled="true" value= <c:out value="${sessionScope.user.userphone}"></c:out> ><br> 
-		<br> <input  maxlength="20" placeholder="游戏id" name="usergameid">
-		<input  maxlength="18" placeholder="身份证" name="useridcard"><br> 
-		<br> <input  maxlength="15" placeholder="角色所在大区" name="userrole">
-		<br> 
-	
-		<br> <input type="button" value="提交"  onclick="doajax();">
-	</form>
+	<div id="usermsg">个人信息
+		<p id="username">姓名：<c:out value="${sessionScope.user.username}" default="无"></c:out></p></p>
+		<p id="usergameid">游戏id： <c:out value="${sessionScope.user.usergameid}" default="无"></c:out></p>
+		<p id="userphone">联系方式： <c:out value="${sessionScope.user.userphone}" default="无"></c:out></p>
 	</div>
-	
+	<br>
+	<div id="teammsg">战队信息
+		<p id="teamname">战队名：<c:out value="${sessionScope.team.teamname}" default="无"></c:out></p></p>
+		<p id="usergameid">队长名： <c:out value="${sessionScope.team.leadername}" default="无"></c:out>
+		<c:out value="${sessionScope.leader.leadergameid}" ></c:out>
+		<c:out value="${sessionScope.leader.leaderphone}" ></c:out>
+		</p> 
+		<p id="userphone">队员：
+		<c:if test="${empty sessionScope.member}">
+   			<c:out value="无"/>
+		</c:if>
+		<c:forEach var="listM" items="${sessionScope.member}" varStatus="listMembers" begin="1">
+          <c:out value="${listM.membername}" default="无"></c:out>
+          <c:out value="${listM.membergameid}" default="无"></c:out>
+          <c:out value="${listM.memberphone}" default="无"></c:out><br>
+		</c:forEach> 
+		
+		</p>
+	</div>
 </body>
 
 </html>
